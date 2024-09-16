@@ -1,0 +1,2 @@
+Main script: source_reconstruction.m
+Important secondary scripts: m_eLORETA_nvr.m & allplots_cortex_mina.m
