@@ -52,42 +52,45 @@ for mc=1:numel(m_conds)
     NVR_01_DS_PREP(m_conds{mc}, data_path)
         
     %% Crop relevant parts and trim
-    NVR_02_crop(c_styles,m_conds{mc}, data_path, trim_s);
+    NVR_02_crop(c_styles, m_conds{mc}, data_path, trim_s);
 
     %% Add individual arousal events to EEG data
-    NVR_03_eventsARO(c_styles,m_conds{mc}, data_path);
+    NVR_03_eventsARO(c_styles, m_conds{mc}, data_path);
     
     %% High-pass filtering 0.3Hz
-    NVR_04_hpf(c_styles,m_conds{mc}, data_path, locutoff);
+    NVR_04_hpf(c_styles, m_conds{mc}, data_path, locutoff);
     
     %% Add ECG events to EEG dataset
     % Run HEPLAB beforehand to get R-peak events in a .mat file
-    NVR_05_addECG(c_styles,m_conds{mc}, data_path);
+    NVR_05_addECG(c_styles, m_conds{mc}, data_path);
     
     %% Copy ICA weights from HP-1Hz dataset to this dataset 
-    NVR_06_copy_ICA(c_styles,m_conds{mc}, data_path);
+    NVR_06_copy_ICA(c_styles, m_conds{mc}, data_path);
 
     %% Epoching
-    NVR_07_epoch(c_styles,m_conds{mc}, data_path, epoch_begin, epoch_end);
+    NVR_07_epoch(c_styles, m_conds{mc}, data_path, epoch_begin, epoch_end);
     
     %% Flag artifacts in ICA components
     % Manual visual inspection
     % Eye, muscle and cardiac field artifacts  
       
     %% Rejection ICA artifacts components
-    NVR_08_rejcomp(c_styles,m_conds{mc}, data_path)
+    NVR_08_rejcomp(c_styles, m_conds{mc}, data_path)
     
     %% Low-Pass filtering 45Hz
-    NVR_09_lpf(c_styles,m_conds{mc}, data_path, hicutoff)
+    NVR_09_lpf(c_styles, m_conds{mc}, data_path, hicutoff)
       
     %% Remove epoch baseline
-    NVR_10_rmbase(c_styles,m_conds{mc}, data_path, baseline)
+    NVR_10_rmbase(c_styles, m_conds{mc}, data_path, baseline)
     
     %% Separate HA and LA epochs
-    NVR_11_sepHALA(c_styles,m_conds{mc}, data_path)
+    NVR_11_sepHALA(c_styles, m_conds{mc}, data_path)
     
     %% Convert EEGLAB files into Fieldtrip structure
     % for statistical analysis (cluster-based permutation testing)
-    NVR_12_eeglab2fieldrip(c_styles,m_conds{mc}, data_path)
+    NVR_12_eeglab2fieldrip(c_styles, m_conds{mc}, data_path)
+
+    %% Prepare continuous data for export to MNE
+    NVR_13_eeglab2mne(c_styles, m_conds{mc}, data_path)
     
 end
