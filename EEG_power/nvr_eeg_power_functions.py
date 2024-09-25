@@ -3,11 +3,8 @@ import scipy
 import glob
 import numpy as np
 import pandas as pd
-import fooof
 from scipy.stats import zscore
 from scipy.io import loadmat, savemat
-from scipy.interpolate import interp1d
-import matplotlib.pyplot as plt
 
 
 def castToList(x):
